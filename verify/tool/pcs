@@ -1,0 +1,24 @@
+#!/usr/bin/env -S runhaskell -iverify/tool --ghc-arg=-Wall --ghc-arg=-Wno-missing-signatures --ghc-arg=-Wno-type-defaults
+-- SPDX-License-Identifier: GPL-2.0
+-- Copyright (C) 2025 Fredrik Noring
+
+import Control.Monad ((>=>))
+import System.Environment (getArgs)
+import System.Exit (exitFailure)
+import System.IO (hPutStr, stderr)
+
+import File
+import PCS
+import PVS
+
+help = "usage: pcs <pvs> <pcs-input-file> <pvs-output-file>\n"
+    ++ "\n"
+    ++ "Encode a port command sequence (PCS) into a port vector sequence (PVS).\n"
+
+cmd :: [String] -> IO ()
+cmd ["pvs", ifp, ofp] = readWriteFile ifp ofp $ fromPcs >=> toPvs
+cmd ("help":_)        = putStr help
+cmd _                 = hPutStr stderr help >> exitFailure
+
+main :: IO ()
+main = getArgs >>= cmd

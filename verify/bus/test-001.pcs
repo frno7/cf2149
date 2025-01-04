@@ -1,0 +1,13 @@
+SELECT_L=0 BDC=nact A9_L=0 A8=1
+RESET_L=0 #3 RESET_L=1 #4
+
+BDC=bar REG=iomix   #1 BDC=dws DA=00111000 #1
+BDC=bar REG=shape   #1 BDC=dws DA=00001000 #1
+
+BDC=bar REG=level_a #1 BDC=dws DA=00001111 #1
+BDC=bar REG=level_b #1 BDC=dws DA=00001111 #1
+BDC=bar REG=level_c #1 BDC=dws DA=00010000 #1
+
+BDC=nact
+
+#10000

@@ -1,0 +1,26 @@
+#!/usr/bin/env -S runhaskell -iverify/tool --ghc-arg=-Wall --ghc-arg=-Wno-missing-signatures --ghc-arg=-Wno-type-defaults
+{-# LANGUAGE RecordWildCards #-}
+-- SPDX-License-Identifier: GPL-2.0
+-- Copyright (C) 2025 Fredrik Noring
+
+import Control.Monad ((>=>))
+import System.Environment (getArgs)
+import System.Exit (exitFailure)
+import System.IO (hPutStr, stderr)
+
+import File
+import SVS
+import VCD
+
+help :: String
+help = "usage: svs <vcd> <svs-input-file> <vcd-output-file>\n"
+    ++ "\n"
+    ++ "Transcode a signal value sequence (SVS) into a value change dump (VCD).\n"
+
+cmd :: [String] -> IO ()
+cmd ["vcd", ifp, ofp] = readWriteFile ifp ofp $ fromSvs >=> toVcd
+cmd ("help":_)        = putStr help
+cmd _                 = hPutStr stderr help >> exitFailure
+
+main :: IO ()
+main = getArgs >>= cmd

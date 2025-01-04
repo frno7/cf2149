@@ -1,0 +1,43 @@
+name: Compile CF2149
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  build-linux:
+    strategy:
+      fail-fast: false  # 'false' means don't stop if some archs fail.
+      matrix:
+        arch: [ppc64le, aarch64, x86_64]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - uses: uraimo/run-on-arch-action@v2.2.0
+        name: Compile CF2149 for Linux/${{ matrix.arch }}
+        if: ${{ matrix.arch != 'x86_64' }}
+        with:
+          arch: ${{ matrix.arch }}
+          install: |
+            apt-get update -q -y
+            apt-get install -q -y git make gcc libc-dev
+          run: |
+            # Avoid fatal: unsafe repository (directory is owned by someone else)
+            # Confer https://github.com/actions/checkout/issues/760
+            git config --global --add safe.directory "*"
+            JOBS="$(getconf _NPROCESSORS_ONLN)"
+            make -j"$JOBS" V=1 module
+
+      - name: Compile CF2149 for Linux/x86_64
+        if: ${{ matrix.arch == 'x86_64' }}
+        run: |
+          sudo apt-get update -q -y
+          sudo apt-get install -q -y git make gcc libc-dev
+          JOBS="$(getconf _NPROCESSORS_ONLN)"
+          make -j"$JOBS" V=1 S=1 module
+          git clean -fdx
+          make -j"$JOBS" V=1 module

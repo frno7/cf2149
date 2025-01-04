@@ -1,0 +1,4 @@
+-- Simple reset. Verify shape of 17-bit LFSR noise generator.
+
+RESET_L=0 #3 RESET_L=1
+#1000

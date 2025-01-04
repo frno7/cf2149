@@ -1,0 +1,11 @@
+*.o
+*.o.d
+*.log
+*.pvs
+*.svs
+*.vcd
+*.vvp
+*.tmp
+/GPATH
+/GRTAGS
+/GTAGS

@@ -118,7 +118,7 @@ static uint8_t cf2149_env_level(struct cf2149_module *module)
 			module->state.env.wave -= 2 * 32;
 	}
 
-	return w;
+	return (w << 3) | (w ? 0x7 : 0);  /* FIXME: Adaptable rounding mode. */
 }
 
 #define CF2149_LVN(ch_)							\
@@ -134,7 +134,8 @@ CF2149_LVN(c)
 
 static uint8_t cf2149_level_ext(uint8_t lvl)
 {
-	return (lvl << 1) | (lvl ? 1 : 0);
+	/* FIXME: Adaptable rounding mode. */
+	return (lvl << 4) | (lvl ? 0xf : 0);
 }
 
 static size_t cf2149_rd_ac(struct cf2149_module *module,
@@ -166,9 +167,9 @@ static size_t cf2149_rd_ac(struct cf2149_module *module,
 		const uint8_t lvc = cf2149_lvc(module, mxc, xlvc, env);
 
 		buffer[i] = (struct cf2149_ac) {
-			.lva = lva,
-			.lvb = lvb,
-			.lvc = lvc,
+			.lva.b8 = lva,
+			.lvb.b8 = lvb,
+			.lvc.b8 = lvc,
 		};
 	}
 

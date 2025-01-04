@@ -117,10 +117,18 @@ union cf2149_reg {
 	uint8_t r[16];
 };
 
+union cf2149_ac_level {
+	struct { __BITFIELD_FIELD(uint8_t b4 : 4, __BITFIELD_FIELD(uint8_t : 4, ;)) };
+	struct { __BITFIELD_FIELD(uint8_t b5 : 5, __BITFIELD_FIELD(uint8_t : 3, ;)) };
+	struct { __BITFIELD_FIELD(uint8_t b6 : 6, __BITFIELD_FIELD(uint8_t : 2, ;)) };
+	struct { __BITFIELD_FIELD(uint8_t b7 : 7, __BITFIELD_FIELD(uint8_t : 1, ;)) };
+	uint8_t b8;
+};
+
 struct cf2149_ac {
-	uint8_t lva;
-	uint8_t lvb;
-	uint8_t lvc;
+	union cf2149_ac_level lva;
+	union cf2149_ac_level lvb;
+	union cf2149_ac_level lvc;
 };
 
 struct cf2149_clk {

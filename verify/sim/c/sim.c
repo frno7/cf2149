@@ -62,7 +62,7 @@ static void svs_entry(FILE *svs_file,
 		" port_bdir.1=%d"
 		" port_bc2.1=%d"
 		" port_bc1.1=%d"
-		" ac_lva.5=%d" " ac_lvb.5=%d" " ac_lvc.5=%d"
+		" ac_lva.8=%d" " ac_lvb.8=%d" " ac_lvc.8=%d"
 		" reg_select.4=%d"
 		" reg_00_plo_a.8=%d" " reg_01_phi_a.4=%d"
 		" reg_02_plo_b.8=%d" " reg_03_phi_b.4=%d"
@@ -82,7 +82,7 @@ static void svs_entry(FILE *svs_file,
 		cf2149->port.state.bdc.bdir,
 		cf2149->port.state.bdc.bc2,
 		cf2149->port.state.bdc.bc1,
-		ac.lva, ac.lvb, ac.lvc,
+		ac.lva.b8, ac.lvb.b8, ac.lvc.b8,
 		cf2149->state.reg_address,
 		cf2149->state.reg.r[ 0], cf2149->state.reg.r[ 1],
 		cf2149->state.reg.r[ 2], cf2149->state.reg.r[ 3],

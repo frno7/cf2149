@@ -48,7 +48,7 @@ module: $(CF2149_OBJ)
 
 ALL_DEP = $(sort $(ALL_OBJ:%=%.d))
 
-all: $(CF2149_OBJ) $(CF2149_ATARI_ST_OBJ)
+all: $(CF2149_OBJ)
 
 .PHONY: gtags
 gtags:

@@ -114,7 +114,7 @@ union cf2149_reg {
 		struct cf2149_io_a io_a;
 		struct cf2149_io_b io_b;
 	};
-	uint8_t r[16];
+	uint8_t u8[16];
 };
 
 union cf2149_ac_level {
@@ -155,7 +155,7 @@ union cf2149_bdc {
 		CF2149_BITFIELD(uint8_t bc1 : 1,
 		;))))
 	};
-	uint8_t r;
+	uint8_t u8;
 };
 
 union cf2149_a98 {
@@ -165,7 +165,7 @@ union cf2149_a98 {
 		CF2149_BITFIELD(uint8_t a8 : 1,
 		;)))
 	};
-	uint8_t r;
+	uint8_t u8;
 };
 
 enum cf2149_select_mode {

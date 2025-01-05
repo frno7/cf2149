@@ -84,17 +84,17 @@ static void svs_entry(FILE *svs_file,
 		cf2149->port.state.bdc.bc1,
 		ac.lva.b8, ac.lvb.b8, ac.lvc.b8,
 		cf2149->state.reg_address,
-		cf2149->state.reg.r[ 0], cf2149->state.reg.r[ 1],
-		cf2149->state.reg.r[ 2], cf2149->state.reg.r[ 3],
-		cf2149->state.reg.r[ 4], cf2149->state.reg.r[ 5],
-		cf2149->state.reg.r[ 6],
-		cf2149->state.reg.r[ 7],
-		cf2149->state.reg.r[ 8],
-		cf2149->state.reg.r[ 9],
-		cf2149->state.reg.r[10],
-		cf2149->state.reg.r[11], cf2149->state.reg.r[12],
-		cf2149->state.reg.r[13],
-		cf2149->state.reg.r[14], cf2149->state.reg.r[15],
+		cf2149->state.reg.u8[ 0], cf2149->state.reg.u8[ 1],
+		cf2149->state.reg.u8[ 2], cf2149->state.reg.u8[ 3],
+		cf2149->state.reg.u8[ 4], cf2149->state.reg.u8[ 5],
+		cf2149->state.reg.u8[ 6],
+		cf2149->state.reg.u8[ 7],
+		cf2149->state.reg.u8[ 8],
+		cf2149->state.reg.u8[ 9],
+		cf2149->state.reg.u8[10],
+		cf2149->state.reg.u8[11], cf2149->state.reg.u8[12],
+		cf2149->state.reg.u8[13],
+		cf2149->state.reg.u8[14], cf2149->state.reg.u8[15],
 		cf2149->state.noise.lfsr,
 		cf2149->state.env.p, cf2149->state.env.wave);
 
@@ -201,12 +201,12 @@ int main(int argc, char *argv[])
 		};
 		cf2149.port.bdc(&cf2149, cf2149_clk_cycle(cycle), bdc);
 
-		if (bdc.r == CF2149_BDC_ADAR ||
-		    bdc.r == CF2149_BDC_BAR  ||
-		    bdc.r == CF2149_BDC_DWS  ||
-		    bdc.r == CF2149_BDC_INTAK)
+		if (bdc.u8 == CF2149_BDC_ADAR ||
+		    bdc.u8 == CF2149_BDC_BAR  ||
+		    bdc.u8 == CF2149_BDC_DWS  ||
+		    bdc.u8 == CF2149_BDC_INTAK)
 			cf2149.port.wr_da(&cf2149, cf2149_clk_cycle(cycle), port.i_da);
-		else if (bdc.r == CF2149_BDC_DTB)
+		else if (bdc.u8 == CF2149_BDC_DTB)
 			cf2149.port.rd_da(&cf2149, cf2149_clk_cycle(cycle));
 
 	}

@@ -178,13 +178,13 @@ static size_t cf2149_rd_ac(struct cf2149_module *module,
 
 static uint8_t cf2149_rd_da(struct cf2149_module *module, struct cf2149_clk clk)
 {
-	if (!module->port.state.reset_l || module->port.state.a98.r != 1)
+	if (!module->port.state.reset_l || module->port.state.a98.u8 != 1)
 		return 0x00;
 
-	switch (module->port.state.bdc.r) {
+	switch (module->port.state.bdc.u8) {
 	case CF2149_BDC_DTB:
 		return module->state.reg_address < 16 ?
-		       module->state.reg.r[module->state.reg_address] : 0xff;
+		       module->state.reg.u8[module->state.reg_address] : 0xff;
 	default:
 		return 0xff;	/* Inactive */
 	}
@@ -195,10 +195,10 @@ static void cf2149_wr_da(struct cf2149_module *module,
 {
 	MODULE_BUG_ON(module, module->clk.c < clk.c);
 
-	if (!module->port.state.reset_l || module->port.state.a98.r != 1)
+	if (!module->port.state.reset_l || module->port.state.a98.u8 != 1)
 		return;
 
-	switch (module->port.state.bdc.r) {
+	switch (module->port.state.bdc.u8) {
 	case CF2149_BDC_ADAR:
 	case CF2149_BDC_BAR:
 	case CF2149_BDC_INTAK:
@@ -207,11 +207,11 @@ static void cf2149_wr_da(struct cf2149_module *module,
 		break;
 	case CF2149_BDC_DWS:
 		if (module->state.reg_address == CF2149_REG_SHAPE &&
-		    module->state.reg.r[module->state.reg_address] != da)
+		    module->state.reg.u8[module->state.reg_address] != da)
 			module->state.env.p = module->state.env.wave = 0;
 
 		if (module->state.reg_address < 16)
-			module->state.reg.r[module->state.reg_address] = da;
+			module->state.reg.u8[module->state.reg_address] = da;
 		break;
 	default:
 		/* Inactive */

@@ -167,9 +167,9 @@ static size_t cf2149_rd_ac(struct cf2149_module *module,
 		const uint8_t lvc = cf2149_lvc(module, mxc, xlvc, env);
 
 		buffer[i] = (struct cf2149_ac) {
-			.lva.b8 = lva,
-			.lvb.b8 = lvb,
-			.lvc.b8 = lvc,
+			.lva.u8 = lva,
+			.lvb.u8 = lvb,
+			.lvc.u8 = lvc,
 		};
 	}
 

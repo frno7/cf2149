@@ -35,33 +35,33 @@ struct cf2149_channel_lo {
 };
 
 struct cf2149_channel_hi {
-	__BITFIELD_FIELD(uint8_t : 4,
-	__BITFIELD_FIELD(uint8_t period : 4,
+	CF2149_BITFIELD(uint8_t : 4,
+	CF2149_BITFIELD(uint8_t period : 4,
 	;))
 };
 
 struct cf2149_noise {
-	__BITFIELD_FIELD(uint8_t : 3,
-	__BITFIELD_FIELD(uint8_t period : 5,
+	CF2149_BITFIELD(uint8_t : 3,
+	CF2149_BITFIELD(uint8_t period : 5,
 	;))
 };
 
 struct cf2149_iomix {
-	__BITFIELD_FIELD(uint8_t io_b : 1,
-	__BITFIELD_FIELD(uint8_t io_a : 1,
-	__BITFIELD_FIELD(uint8_t noise_c : 1,
-	__BITFIELD_FIELD(uint8_t noise_b : 1,
-	__BITFIELD_FIELD(uint8_t noise_a : 1,
-	__BITFIELD_FIELD(uint8_t tone_c : 1,
-	__BITFIELD_FIELD(uint8_t tone_b : 1,
-	__BITFIELD_FIELD(uint8_t tone_a : 1,
+	CF2149_BITFIELD(uint8_t io_b : 1,
+	CF2149_BITFIELD(uint8_t io_a : 1,
+	CF2149_BITFIELD(uint8_t noise_c : 1,
+	CF2149_BITFIELD(uint8_t noise_b : 1,
+	CF2149_BITFIELD(uint8_t noise_a : 1,
+	CF2149_BITFIELD(uint8_t tone_c : 1,
+	CF2149_BITFIELD(uint8_t tone_b : 1,
+	CF2149_BITFIELD(uint8_t tone_a : 1,
 	;))))))))
 };
 
 struct cf2149_level {
-	__BITFIELD_FIELD(uint8_t : 3,
-	__BITFIELD_FIELD(uint8_t m : 1,
-	__BITFIELD_FIELD(uint8_t level : 4,
+	CF2149_BITFIELD(uint8_t : 3,
+	CF2149_BITFIELD(uint8_t m : 1,
+	CF2149_BITFIELD(uint8_t level : 4,
 	;)))
 };
 
@@ -75,14 +75,14 @@ struct cf2149_envelope_hi {
 
 struct cf2149_envelope_shape {
 	union {
-		__BITFIELD_FIELD(uint8_t : 4,
-		__BITFIELD_FIELD(uint8_t cont : 1,
-		__BITFIELD_FIELD(uint8_t att : 1,
-		__BITFIELD_FIELD(uint8_t alt : 1,
-		__BITFIELD_FIELD(uint8_t hold: 1,
+		CF2149_BITFIELD(uint8_t : 4,
+		CF2149_BITFIELD(uint8_t cont : 1,
+		CF2149_BITFIELD(uint8_t att : 1,
+		CF2149_BITFIELD(uint8_t alt : 1,
+		CF2149_BITFIELD(uint8_t hold: 1,
 		;)))))
-		__BITFIELD_FIELD(uint8_t : 4,
-		__BITFIELD_FIELD(uint8_t ctrl : 4,
+		CF2149_BITFIELD(uint8_t : 4,
+		CF2149_BITFIELD(uint8_t ctrl : 4,
 		;))
 	};
 };
@@ -118,10 +118,10 @@ union cf2149_reg {
 };
 
 union cf2149_ac_level {
-	struct { __BITFIELD_FIELD(uint8_t b4 : 4, __BITFIELD_FIELD(uint8_t : 4, ;)) };
-	struct { __BITFIELD_FIELD(uint8_t b5 : 5, __BITFIELD_FIELD(uint8_t : 3, ;)) };
-	struct { __BITFIELD_FIELD(uint8_t b6 : 6, __BITFIELD_FIELD(uint8_t : 2, ;)) };
-	struct { __BITFIELD_FIELD(uint8_t b7 : 7, __BITFIELD_FIELD(uint8_t : 1, ;)) };
+	struct { CF2149_BITFIELD(uint8_t b4 : 4, CF2149_BITFIELD(uint8_t : 4, ;)) };
+	struct { CF2149_BITFIELD(uint8_t b5 : 5, CF2149_BITFIELD(uint8_t : 3, ;)) };
+	struct { CF2149_BITFIELD(uint8_t b6 : 6, CF2149_BITFIELD(uint8_t : 2, ;)) };
+	struct { CF2149_BITFIELD(uint8_t b7 : 7, CF2149_BITFIELD(uint8_t : 1, ;)) };
 	uint8_t b8;
 };
 
@@ -149,10 +149,10 @@ enum {				/* BDIR BC2 BC1 Mode          */
 
 union cf2149_bdc {
 	struct {
-		__BITFIELD_FIELD(uint8_t : 5,
-		__BITFIELD_FIELD(uint8_t bdir : 1,
-		__BITFIELD_FIELD(uint8_t bc2 : 1,
-		__BITFIELD_FIELD(uint8_t bc1 : 1,
+		CF2149_BITFIELD(uint8_t : 5,
+		CF2149_BITFIELD(uint8_t bdir : 1,
+		CF2149_BITFIELD(uint8_t bc2 : 1,
+		CF2149_BITFIELD(uint8_t bc1 : 1,
 		;))))
 	};
 	uint8_t r;
@@ -160,9 +160,9 @@ union cf2149_bdc {
 
 union cf2149_a98 {
 	struct {
-		__BITFIELD_FIELD(uint8_t : 6,
-		__BITFIELD_FIELD(uint8_t a9_l : 1,
-		__BITFIELD_FIELD(uint8_t a8 : 1,
+		CF2149_BITFIELD(uint8_t : 6,
+		CF2149_BITFIELD(uint8_t a9_l : 1,
+		CF2149_BITFIELD(uint8_t a8 : 1,
 		;)))
 	};
 	uint8_t r;

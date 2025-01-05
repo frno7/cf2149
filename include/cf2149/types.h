@@ -9,13 +9,9 @@
 #include <sys/types.h>
 
 #if __BYTE_ORDER__ == __ORDER_BIG_ENDIAN__
-#define __BITFIELD_FIELD(field, more)					\
-	field;								\
-	more
+#define CF2149_BITFIELD(field, more) field; more
 #elif __BYTE_ORDER__ == __ORDER_LITTLE_ENDIAN__
-#define __BITFIELD_FIELD(field, more)					\
-	more								\
-	field;
+#define CF2149_BITFIELD(field, more) more field;
 #else
 #error "Bitfield neither big nor little endian?"
 #endif

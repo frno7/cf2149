@@ -2,7 +2,7 @@
 
 cf2149_module_dir := $(dir $(lastword $(MAKEFILE_LIST)))
 
-CF2149_SRC := $(cf2149_module_dir)/cf2149.c
+CF2149_SRC := $(cf2149_module_dir)cf2149.c
 
 ifeq (module/,$(cf2149_module_dir))
 

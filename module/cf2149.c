@@ -250,7 +250,7 @@ static void cf2149_reset_l(struct cf2149_module *module,
 	module->port.state.reset_l = reset_l;
 }
 
-struct cf2149_module cf2149_init(uint32_t mode)
+struct cf2149_module cf2149_init()
 {
 	struct cf2149_module module = {
 		.port = {

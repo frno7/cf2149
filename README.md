@@ -4,11 +4,11 @@
 
 The CF2149 module in C is designed to be compatible with the [General
 Instrument AY-3-8910][AY-3-8910] 3-voice programmable sound generator (PSG)
-made in 1978, and the Yamaha YM2149F. These devices were used in many arcade
-games and computers such as the [Atari ST] in the 1980s.
+made in 1978, and the Yamaha YM2149. These devices were used in many arcade
+games and computers such as the [MSX] and [Atari ST] in the 1980s.
 
 The CF2149 repository is made to be included as a Git submodule in larger
-designs.
+designs, for example [PSG play](https://github.com/frno7/psgplay).
 
 # Manuals and references
 
@@ -19,6 +19,7 @@ designs.
 - [JT49] has a Verilog implementation.
 
 [AY-3-8910]: https://en.wikipedia.org/wiki/General_Instrument_AY-3-8910
+[MSX]: https://en.wikipedia.org/wiki/MSX
 [Atari ST]: https://en.wikipedia.org/wiki/Atari_ST
 
 [AY-3-8910/8912 manual]: https://archive.org/embed/AY-3-8910-8912_Feb-1979

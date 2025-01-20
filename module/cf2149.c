@@ -207,8 +207,7 @@ static void cf2149_wr_da(struct cf2149_module *module,
 			module->state.reg_address = da;
 		break;
 	case CF2149_BDC_DWS:
-		if (module->state.reg_address == CF2149_REG_SHAPE &&
-		    module->state.reg.u8[module->state.reg_address] != da)
+		if (module->state.reg_address == CF2149_REG_SHAPE)
 			module->state.env.p = module->state.env.wave = 0;
 
 		if (module->state.reg_address < 16)

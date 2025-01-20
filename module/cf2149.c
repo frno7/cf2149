@@ -25,12 +25,13 @@ DEFINE_CF2149_CHN_PERIOD(c)
 static bool cf2149_ch ## ch_ ## _update(struct cf2149_module *module)	\
 {									\
 	const uint16_t period = cf2149_ch ## ch_ ## _period(module);	\
-	const bool t = module->state.tone.ch_.p >= period;		\
 									\
-	if (++module->state.tone.ch_.p >= 2 * period)			\
-		module->state.tone.ch_.p = 0;				\
+	if (++module->state.tone.ch_.p >= period) {			\
+		module->state.tone.ch_.t ^= 1;				\
+		module->state.tone.ch_.p  = 0;				\
+	}								\
 									\
-	return t;							\
+	return module->state.tone.ch_.t;				\
 }
 
 DEFINE_CF2149_CHN_UPDATE(a)

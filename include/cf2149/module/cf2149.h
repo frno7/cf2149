@@ -215,6 +215,7 @@ struct cf2149_module {
 
 		struct {
 			struct {
+				bool t;
 				uint16_t p;
 			} a, b, c;
 		} tone;

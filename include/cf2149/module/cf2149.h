@@ -6,23 +6,23 @@
 
 #include "cf2149/types.h"
 
-#define CF2149_REGISTERS(reg)						\
-	reg( 0, plo_a,   PLO_A,   "Period of channel A fine tone")	\
-	reg( 1, phi_a,   PHI_A,   "Period of channel A rough tone")	\
-	reg( 2, plo_b,   PLO_B,   "Period of channel B fine tone")	\
-	reg( 3, phi_b,   PHI_B,   "Period of channel B rough tone")	\
-	reg( 4, plo_c,   PLO_C,   "Period of channel C fine tone")	\
-	reg( 5, phi_c,   PHI_C,   "Period of channel C rough tone")	\
-	reg( 6, noise,   NOISE,   "Period of noise")			\
-	reg( 7, iomix,   IOMIX,   "I/O port and mixer settings")	\
-	reg( 8, level_a, LEVEL_A, "Level of channel A")			\
-	reg( 9, level_b, LEVEL_B, "Level of channel B")			\
-	reg(10, level_c, LEVEL_C, "Level of channel C")			\
-	reg(11, plo_env, PLO_ENV, "Period of envelope fine")		\
-	reg(12, phi_env, PHI_ENV, "Period of envelope rough")		\
-	reg(13, shape,   SHAPE,   "Shape of envelope")			\
-	reg(14, io_a,    IO_A,    "Data of I/O port A")			\
-	reg(15, io_b,    IO_B,    "Data of I/O port B")
+#define CF2149_REGISTERS(r)						\
+	r( 0, plo_a,   PLO_A,   "Period of channel A fine tone")	\
+	r( 1, phi_a,   PHI_A,   "Period of channel A rough tone")	\
+	r( 2, plo_b,   PLO_B,   "Period of channel B fine tone")	\
+	r( 3, phi_b,   PHI_B,   "Period of channel B rough tone")	\
+	r( 4, plo_c,   PLO_C,   "Period of channel C fine tone")	\
+	r( 5, phi_c,   PHI_C,   "Period of channel C rough tone")	\
+	r( 6, noise,   NOISE,   "Period of noise")			\
+	r( 7, iomix,   IOMIX,   "I/O port and mixer settings")		\
+	r( 8, level_a, LEVEL_A, "Level of channel A")			\
+	r( 9, level_b, LEVEL_B, "Level of channel B")			\
+	r(10, level_c, LEVEL_C, "Level of channel C")			\
+	r(11, plo_env, PLO_ENV, "Period of envelope fine")		\
+	r(12, phi_env, PHI_ENV, "Period of envelope rough")		\
+	r(13, shape,   SHAPE,   "Shape of envelope")			\
+	r(14, io_a,    IO_A,    "Data of I/O port A")			\
+	r(15, io_b,    IO_B,    "Data of I/O port B")
 
 enum {
 #define CF2149_REG_ENUM(register_, symbol_, label_, description_)	\
@@ -219,7 +219,7 @@ struct cf2149_module {
 
 	struct cf2149_state {
 		struct cf2149_regs regs;
-		uint8_t reg_address;
+		uint8_t reg;
 
 		struct {
 			struct {

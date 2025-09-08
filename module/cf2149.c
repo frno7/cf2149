@@ -184,8 +184,8 @@ static uint8_t cf2149_rd_da(struct cf2149_module *module, struct cf2149_clk clk)
 
 	switch (module->port.state.bdc.u8) {
 	case CF2149_BDC_DTB:
-		return module->state.reg_address < 16 ?
-		       module->state.regs.u8[module->state.reg_address] : 0xff;
+		return module->state.reg < 16 ?
+		       module->state.regs.u8[module->state.reg] : 0xff;
 	default:
 		return 0xff;	/* Inactive */
 	}
@@ -204,14 +204,14 @@ static void cf2149_wr_da(struct cf2149_module *module,
 	case CF2149_BDC_BAR:
 	case CF2149_BDC_INTAK:
 		if (da < 16)
-			module->state.reg_address = da;
+			module->state.reg = da;
 		break;
 	case CF2149_BDC_DWS:
-		if (module->state.reg_address == CF2149_REG_SHAPE)
+		if (module->state.reg == CF2149_REG_SHAPE)
 			module->state.env.p = module->state.env.wave = 0;
 
-		if (module->state.reg_address < 16)
-			module->state.regs.u8[module->state.reg_address] = da;
+		if (module->state.reg < 16)
+			module->state.regs.u8[module->state.reg] = da;
 		break;
 	default:
 		/* Inactive */

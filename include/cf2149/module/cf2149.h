@@ -95,26 +95,28 @@ struct cf2149_io_b {
 	uint8_t data;
 };
 
-union cf2149_reg {
-	struct {
-		struct cf2149_channel_lo lo_a;
-		struct cf2149_channel_hi hi_a;
-		struct cf2149_channel_lo lo_b;
-		struct cf2149_channel_hi hi_b;
-		struct cf2149_channel_lo lo_c;
-		struct cf2149_channel_hi hi_c;
-		struct cf2149_noise noise;
-		struct cf2149_iomix iomix;
-		struct cf2149_level level_a;
-		struct cf2149_level level_b;
-		struct cf2149_level level_c;
-		struct cf2149_envelope_lo envelope_lo;
-		struct cf2149_envelope_hi envelope_hi;
-		struct cf2149_envelope_shape envelope_shape;
-		struct cf2149_io_a io_a;
-		struct cf2149_io_b io_b;
+struct cf2149_regs {
+	union {
+		struct {
+			struct cf2149_channel_lo lo_a;
+			struct cf2149_channel_hi hi_a;
+			struct cf2149_channel_lo lo_b;
+			struct cf2149_channel_hi hi_b;
+			struct cf2149_channel_lo lo_c;
+			struct cf2149_channel_hi hi_c;
+			struct cf2149_noise noise;
+			struct cf2149_iomix iomix;
+			struct cf2149_level level_a;
+			struct cf2149_level level_b;
+			struct cf2149_level level_c;
+			struct cf2149_envelope_lo envelope_lo;
+			struct cf2149_envelope_hi envelope_hi;
+			struct cf2149_envelope_shape envelope_shape;
+			struct cf2149_io_a io_a;
+			struct cf2149_io_b io_b;
+		};
+		uint8_t u8[16];
 	};
-	uint8_t u8[16];
 };
 
 struct cf2149_ac_level {
@@ -216,7 +218,7 @@ struct cf2149_module {
 	struct cf2149_clk clk;
 
 	struct cf2149_state {
-		union cf2149_reg reg;
+		struct cf2149_regs regs;
 		uint8_t reg_address;
 
 		struct {

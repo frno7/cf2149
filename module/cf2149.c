@@ -11,8 +11,8 @@ static uint16_t cf2149_ch ## ch_ ## _period(				\
 	const struct cf2149_module *module)				\
 {									\
 	const uint16_t period =						\
-		(module->state.reg.hi_ ## ch_.period << 8) |		\
-		 module->state.reg.lo_ ## ch_.period;			\
+		(module->state.regs.hi_ ## ch_.period << 8) |		\
+		 module->state.regs.lo_ ## ch_.period;			\
 									\
 	return period ? period : 1;					\
 }
@@ -42,8 +42,8 @@ DEFINE_CF2149_CHN_UPDATE(c)
 static bool cf2149_mx ## ch_(const struct cf2149_module *module,	\
 	const bool t, const bool n)					\
 {									\
-	return (module->state.reg.iomix.tone_  ## ch_ || t) &&		\
-	       (module->state.reg.iomix.noise_ ## ch_ || n);		\
+	return (module->state.regs.iomix.tone_  ## ch_ || t) &&		\
+	       (module->state.regs.iomix.noise_ ## ch_ || n);		\
 }
 
 DEFINE_CF2149_MXN(a)
@@ -52,8 +52,8 @@ DEFINE_CF2149_MXN(c)
 
 static uint16_t cf2149_noise_period(const struct cf2149_module *module)
 {
-	return module->state.reg.noise.period ?
-	       module->state.reg.noise.period : 1;
+	return module->state.regs.noise.period ?
+	       module->state.regs.noise.period : 1;
 }
 
 static bool cf2149_rng_update(struct cf2149_module *module)
@@ -74,8 +74,8 @@ static bool cf2149_rng_update(struct cf2149_module *module)
 
 static uint16_t cf2149_env_period(const struct cf2149_module *module)
 {
-	const uint16_t period = (module->state.reg.envelope_hi.period << 8) |
-				 module->state.reg.envelope_lo.period;
+	const uint16_t period = (module->state.regs.envelope_hi.period << 8) |
+				 module->state.regs.envelope_lo.period;
 
 	return period ? period : 1;
 }
@@ -109,7 +109,7 @@ static uint8_t cf2149_env_level(struct cf2149_module *module)
 		{ RISE, FALL, RISE },	/* /\/\ */
 		{ RISE, ZERO, ZERO },	/* /___ */
 	};
-	const uint8_t w = wave[module->state.reg.envelope_shape.ctrl]
+	const uint8_t w = wave[module->state.regs.envelope_shape.ctrl]
 			      [module->state.env.wave];
 
 	if (++module->state.env.p >= cf2149_env_period(module)) {
@@ -126,7 +126,7 @@ static uint8_t cf2149_env_level(struct cf2149_module *module)
 static uint8_t cf2149_lv ## ch_(const struct cf2149_module *module,	\
 	const bool mx, const uint8_t lvl, const uint8_t env)		\
 {									\
-	return mx ? (module->state.reg.level_ ## ch_.m ? env : lvl) : 0;\
+	return mx ? (module->state.regs.level_ ## ch_.m ? env : lvl) : 0; \
 }
 
 CF2149_LVN(a)
@@ -145,9 +145,9 @@ static size_t cf2149_rd_ac(struct cf2149_module *module,
 	if (!module->port.state.reset_l)
 		return 0;
 
-	const uint8_t xlva = cf2149_level_ext(module->state.reg.level_a.level);
-	const uint8_t xlvb = cf2149_level_ext(module->state.reg.level_b.level);
-	const uint8_t xlvc = cf2149_level_ext(module->state.reg.level_c.level);
+	const uint8_t xlva = cf2149_level_ext(module->state.regs.level_a.level);
+	const uint8_t xlvb = cf2149_level_ext(module->state.regs.level_b.level);
+	const uint8_t xlvc = cf2149_level_ext(module->state.regs.level_c.level);
 
 	const uint64_t cd = module->port.state.select_l ? 8 : 16;
 	size_t i = 0;
@@ -185,7 +185,7 @@ static uint8_t cf2149_rd_da(struct cf2149_module *module, struct cf2149_clk clk)
 	switch (module->port.state.bdc.u8) {
 	case CF2149_BDC_DTB:
 		return module->state.reg_address < 16 ?
-		       module->state.reg.u8[module->state.reg_address] : 0xff;
+		       module->state.regs.u8[module->state.reg_address] : 0xff;
 	default:
 		return 0xff;	/* Inactive */
 	}
@@ -211,7 +211,7 @@ static void cf2149_wr_da(struct cf2149_module *module,
 			module->state.env.p = module->state.env.wave = 0;
 
 		if (module->state.reg_address < 16)
-			module->state.reg.u8[module->state.reg_address] = da;
+			module->state.regs.u8[module->state.reg_address] = da;
 		break;
 	default:
 		/* Inactive */
@@ -285,7 +285,7 @@ struct cf2149_module cf2149_init()
 		},
 	};
 
-	BUILD_BUG_ON(sizeof(module.state.reg) != 16);
+	BUILD_BUG_ON(sizeof(module.state.regs) != 16);
 
 	return module;
 };

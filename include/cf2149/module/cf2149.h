@@ -25,7 +25,7 @@
 	reg(15, io_b,    IO_B,    "Data of I/O port B")
 
 enum {
-#define CF2149_REG_ENUM(register_, symbol_, label_, description_)		\
+#define CF2149_REG_ENUM(register_, symbol_, label_, description_)	\
 	CF2149_REG_##label_ = register_,
 CF2149_REGISTERS(CF2149_REG_ENUM)
 };
@@ -147,25 +147,29 @@ enum {				/* BDIR BC2 BC1 Mode          */
 	CF2149_BDC_INTAK,	/*   1   1   1  Latch address */
 };
 
-union cf2149_bdc {
-	struct {
-		CF2149_BITFIELD(uint8_t : 5,
-		CF2149_BITFIELD(uint8_t bdir : 1,
-		CF2149_BITFIELD(uint8_t bc2 : 1,
-		CF2149_BITFIELD(uint8_t bc1 : 1,
-		;))))
+struct cf2149_bdc {
+	union {
+		struct {
+			CF2149_BITFIELD(uint8_t : 5,
+			CF2149_BITFIELD(uint8_t bdir : 1,
+			CF2149_BITFIELD(uint8_t bc2 : 1,
+			CF2149_BITFIELD(uint8_t bc1 : 1,
+			;))))
+		};
+		uint8_t u8;
 	};
-	uint8_t u8;
 };
 
-union cf2149_a98 {
-	struct {
-		CF2149_BITFIELD(uint8_t : 6,
-		CF2149_BITFIELD(uint8_t a9_l : 1,
-		CF2149_BITFIELD(uint8_t a8 : 1,
-		;)))
+struct cf2149_a98 {
+	union {
+		struct {
+			CF2149_BITFIELD(uint8_t : 6,
+			CF2149_BITFIELD(uint8_t a9_l : 1,
+			CF2149_BITFIELD(uint8_t a8 : 1,
+			;)))
+		};
+		uint8_t u8;
 	};
-	uint8_t u8;
 };
 
 enum cf2149_select_mode {
@@ -181,9 +185,9 @@ struct cf2149_port {
 	void (*select_l)(struct cf2149_module *module,
 		struct cf2149_clk clk, enum cf2149_select_mode mode);
 	void (*bdc)(struct cf2149_module *module,
-		struct cf2149_clk clk, union cf2149_bdc bdc);
+		struct cf2149_clk clk, struct cf2149_bdc bdc);
 	void (*a98)(struct cf2149_module *module,
-		struct cf2149_clk clk, union cf2149_a98 a98);
+		struct cf2149_clk clk, struct cf2149_a98 a98);
 
 	uint8_t (*rd_da)(struct cf2149_module *module, struct cf2149_clk clk);
 	void (*wr_da)(struct cf2149_module *module,
@@ -194,8 +198,8 @@ struct cf2149_port {
 	struct cf2149_port_state {
 		bool reset_l;
 		enum cf2149_select_mode select_l;
-		union cf2149_bdc bdc;
-		union cf2149_a98 a98;
+		struct cf2149_bdc bdc;
+		struct cf2149_a98 a98;
 	} state;
 };
 

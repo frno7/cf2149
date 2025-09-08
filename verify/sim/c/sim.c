@@ -194,7 +194,7 @@ int main(int argc, char *argv[])
 		cf2149.port.reset_l(&cf2149, cf2149_clk_cycle(cycle), port.reset_l);
 		cf2149.port.select_l(&cf2149, cf2149_clk_cycle(cycle), port.i_sel_l);
 
-		const union cf2149_bdc bdc = {
+		const struct cf2149_bdc bdc = {
 			.bdir = port.i_bdir,
 			.bc2  = port.i_bc2,
 			.bc1  = port.i_bc1,

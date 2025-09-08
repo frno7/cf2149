@@ -228,13 +228,13 @@ static void cf2149_select_l(struct cf2149_module *module,
 }
 
 static void cf2149_bdc(struct cf2149_module *module,
-	struct cf2149_clk clk, union cf2149_bdc bdc)
+	struct cf2149_clk clk, struct cf2149_bdc bdc)
 {
 	module->port.state.bdc = bdc;
 }
 
 static void cf2149_a98(struct cf2149_module *module,
-	struct cf2149_clk clk, union cf2149_a98 a98)
+	struct cf2149_clk clk, struct cf2149_a98 a98)
 {
 	module->port.state.a98 = a98;
 }

@@ -117,18 +117,20 @@ union cf2149_reg {
 	uint8_t u8[16];
 };
 
-union cf2149_ac_level {
-	struct { CF2149_BITFIELD(uint8_t u4 : 4, CF2149_BITFIELD(uint8_t : 4, ;)) };
-	struct { CF2149_BITFIELD(uint8_t u5 : 5, CF2149_BITFIELD(uint8_t : 3, ;)) };
-	struct { CF2149_BITFIELD(uint8_t u6 : 6, CF2149_BITFIELD(uint8_t : 2, ;)) };
-	struct { CF2149_BITFIELD(uint8_t u7 : 7, CF2149_BITFIELD(uint8_t : 1, ;)) };
-	uint8_t u8;
+struct cf2149_ac_level {
+	union {
+		struct { CF2149_BITFIELD(uint8_t u4 : 4, CF2149_BITFIELD(uint8_t : 4, ;)) };
+		struct { CF2149_BITFIELD(uint8_t u5 : 5, CF2149_BITFIELD(uint8_t : 3, ;)) };
+		struct { CF2149_BITFIELD(uint8_t u6 : 6, CF2149_BITFIELD(uint8_t : 2, ;)) };
+		struct { CF2149_BITFIELD(uint8_t u7 : 7, CF2149_BITFIELD(uint8_t : 1, ;)) };
+		uint8_t u8;
+	};
 };
 
 struct cf2149_ac {
-	union cf2149_ac_level lva;
-	union cf2149_ac_level lvb;
-	union cf2149_ac_level lvc;
+	struct cf2149_ac_level lva;
+	struct cf2149_ac_level lvb;
+	struct cf2149_ac_level lvc;
 };
 
 struct cf2149_clk {

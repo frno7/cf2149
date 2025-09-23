@@ -174,7 +174,7 @@ int main(int argc, char *argv[])
 
 			cycle++;
 
-			cf2149.port.rd_ac(&cf2149, cf2149_clk_cycle(cycle),
+			cf2149.port.rd_ac(&cf2149, cf2149_cycle_c(cycle),
 				ac, ARRAY_SIZE(ac));
 		}
 
@@ -191,23 +191,23 @@ int main(int argc, char *argv[])
 			.i_ob     = from_binary(8, &line[87]),
 		};
 
-		cf2149.port.reset_l(&cf2149, cf2149_clk_cycle(cycle), port.reset_l);
-		cf2149.port.select_l(&cf2149, cf2149_clk_cycle(cycle), port.i_sel_l);
+		cf2149.port.reset_l(&cf2149, cf2149_cycle_c(cycle), port.reset_l);
+		cf2149.port.select_l(&cf2149, cf2149_cycle_c(cycle), port.i_sel_l);
 
 		const struct cf2149_bdc bdc = {
 			.bdir = port.i_bdir,
 			.bc2  = port.i_bc2,
 			.bc1  = port.i_bc1,
 		};
-		cf2149.port.bdc(&cf2149, cf2149_clk_cycle(cycle), bdc);
+		cf2149.port.bdc(&cf2149, cf2149_cycle_c(cycle), bdc);
 
 		if (bdc.u8 == CF2149_BDC_ADAR ||
 		    bdc.u8 == CF2149_BDC_BAR  ||
 		    bdc.u8 == CF2149_BDC_DWS  ||
 		    bdc.u8 == CF2149_BDC_INTAK)
-			cf2149.port.wr_da(&cf2149, cf2149_clk_cycle(cycle), port.i_da);
+			cf2149.port.wr_da(&cf2149, cf2149_cycle_c(cycle), port.i_da);
 		else if (bdc.u8 == CF2149_BDC_DTB)
-			cf2149.port.rd_da(&cf2149, cf2149_clk_cycle(cycle));
+			cf2149.port.rd_da(&cf2149, cf2149_cycle_c(cycle));
 
 	}
 

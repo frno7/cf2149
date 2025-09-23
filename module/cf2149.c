@@ -124,7 +124,7 @@ static uint8_t cf2149_level_ext(uint8_t lvl)
 }
 
 static size_t cf2149_rd_ac(struct cf2149_module *module,
-	struct cf2149_clk clk, struct cf2149_ac *buffer, size_t count)
+	struct cf2149_cycle cycle, struct cf2149_ac *buffer, size_t count)
 {
 	if (!module->port.state.reset_l)
 		return 0;
@@ -136,7 +136,8 @@ static size_t cf2149_rd_ac(struct cf2149_module *module,
 	const uint64_t cd = module->port.state.select_l ? 8 : 16;
 	size_t i = 0;
 
-	for (; module->clk.c < clk.c && i < count; module->clk.c += cd, i++) {
+	for (; module->cycle.c < cycle.c && i < count;
+	       module->cycle.c += cd, i++) {
 		const bool cha = cf2149_cha_update(module);
 		const bool chb = cf2149_chb_update(module);
 		const bool chc = cf2149_chc_update(module);
@@ -161,7 +162,8 @@ static size_t cf2149_rd_ac(struct cf2149_module *module,
 	return i;
 }
 
-static uint8_t cf2149_rd_da(struct cf2149_module *module, struct cf2149_clk clk)
+static uint8_t cf2149_rd_da(struct cf2149_module *module,
+	struct cf2149_cycle cycle)
 {
 	if (!module->port.state.reset_l || module->port.state.a98.u8 != 1)
 		return 0x00;
@@ -176,9 +178,9 @@ static uint8_t cf2149_rd_da(struct cf2149_module *module, struct cf2149_clk clk)
 }
 
 static void cf2149_wr_da(struct cf2149_module *module,
-	struct cf2149_clk clk, uint8_t da)
+	struct cf2149_cycle cycle, uint8_t da)
 {
-	MODULE_BUG_ON(module, module->clk.c < clk.c);
+	MODULE_BUG_ON(module, module->cycle.c < cycle.c);
 
 	if (!module->port.state.reset_l || module->port.state.a98.u8 != 1)
 		return;
@@ -204,32 +206,32 @@ static void cf2149_wr_da(struct cf2149_module *module,
 }
 
 static void cf2149_select_l(struct cf2149_module *module,
-	struct cf2149_clk clk, enum cf2149_select_mode select_l)
+	struct cf2149_cycle cycle, enum cf2149_select_mode select_l)
 {
-	MODULE_BUG_ON(module, module->clk.c < clk.c);
+	MODULE_BUG_ON(module, module->cycle.c < cycle.c);
 
 	module->port.state.select_l = select_l;
 }
 
 static void cf2149_bdc(struct cf2149_module *module,
-	struct cf2149_clk clk, struct cf2149_bdc bdc)
+	struct cf2149_cycle cycle, struct cf2149_bdc bdc)
 {
 	module->port.state.bdc = bdc;
 }
 
 static void cf2149_a98(struct cf2149_module *module,
-	struct cf2149_clk clk, struct cf2149_a98 a98)
+	struct cf2149_cycle cycle, struct cf2149_a98 a98)
 {
 	module->port.state.a98 = a98;
 }
 
 static void cf2149_reset_l(struct cf2149_module *module,
-	struct cf2149_clk clk, bool reset_l)
+	struct cf2149_cycle cycle, bool reset_l)
 {
 	if (!reset_l)
 		module->state = (struct cf2149_state) { };
 	else if (reset_l && !module->port.state.reset_l)
-		module->clk = clk;
+		module->cycle = cycle;
 
 	module->port.state.reset_l = reset_l;
 }

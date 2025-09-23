@@ -135,7 +135,7 @@ struct cf2149_ac {
 	struct cf2149_ac_level lvc;
 };
 
-struct cf2149_clk {
+struct cf2149_cycle {
 	uint64_t c;
 };
 
@@ -185,19 +185,21 @@ struct cf2149_module;
 
 struct cf2149_port {
 	void (*reset_l)(struct cf2149_module *module,
-		struct cf2149_clk clk, bool reset_l);
+		struct cf2149_cycle cycle, bool reset_l);
 	void (*select_l)(struct cf2149_module *module,
-		struct cf2149_clk clk, enum cf2149_select_mode mode);
+		struct cf2149_cycle cycle, enum cf2149_select_mode mode);
 	void (*bdc)(struct cf2149_module *module,
-		struct cf2149_clk clk, struct cf2149_bdc bdc);
+		struct cf2149_cycle cycle, struct cf2149_bdc bdc);
 	void (*a98)(struct cf2149_module *module,
-		struct cf2149_clk clk, struct cf2149_a98 a98);
+		struct cf2149_cycle cycle, struct cf2149_a98 a98);
 
-	uint8_t (*rd_da)(struct cf2149_module *module, struct cf2149_clk clk);
+	uint8_t (*rd_da)(struct cf2149_module *module,
+		struct cf2149_cycle cycle);
 	void (*wr_da)(struct cf2149_module *module,
-		struct cf2149_clk clk, uint8_t da);
+		struct cf2149_cycle cycle, uint8_t da);
 	size_t (*rd_ac)(struct cf2149_module *module,
-		struct cf2149_clk clk, struct cf2149_ac *buffer, size_t count);
+		struct cf2149_cycle cycle,
+		struct cf2149_ac *buffer, size_t count);
 
 	struct cf2149_port_state {
 		bool reset_l;
@@ -215,7 +217,7 @@ struct cf2149_noise_generator {
 struct cf2149_module {
 	struct cf2149_port port;
 
-	struct cf2149_clk clk;
+	struct cf2149_cycle cycle;
 
 	struct cf2149_state {
 		struct cf2149_regs regs;
@@ -244,9 +246,9 @@ struct cf2149_module {
 
 struct cf2149_module cf2149_init();
 
-static inline struct cf2149_clk cf2149_clk_cycle(uint64_t c)
+static inline struct cf2149_cycle cf2149_cycle_c(uint64_t c)
 {
-	return (struct cf2149_clk) { .c = c };
+	return (struct cf2149_cycle) { .c = c };
 }
 
 #endif /* CF2149_MODULE_CF2149_H */

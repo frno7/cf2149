@@ -44,9 +44,9 @@
 #define pr_info(  m, fmt, ...) pr_rep((m), MODULE_INFO    pr_fmt(fmt), ##__VA_ARGS__)
 
 #if defined(DEBUG)
-#define pr_debug( m, fmt, ...) pr_rep((m), KERN_DEBUG     pr_fmt(fmt), ##__VA_ARGS__)
+#define pr_debug( m, fmt, ...) pr_rep((m), MODULE_DEBUG   pr_fmt(fmt), ##__VA_ARGS__)
 #else
-#define pr_debug( m, fmt, ...) no_rep((m), KERN_DEBUG     pr_fmt(fmt), ##__VA_ARGS__)
+#define pr_debug( m, fmt, ...) no_rep((m), MODULE_DEBUG   pr_fmt(fmt), ##__VA_ARGS__)
 #endif
 
 #define pr_err_msg(module, msg)						\

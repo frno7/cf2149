@@ -2,11 +2,10 @@
 /* Copyright (C) 2025 Fredrik Noring */
 
 #include "cf2149/macro.h"
-
 #include "cf2149/module/assert.h"
 #include "cf2149/module/cf2149.h"
 
-#define DEFINE_CF2149_CHN_PERIOD(ch_)					\
+#define CF2149_DEFINE_CHN(ch_)						\
 static uint16_t cf2149_ch ## ch_ ## _period(				\
 	const struct cf2149_module *module)				\
 {									\
@@ -15,13 +14,8 @@ static uint16_t cf2149_ch ## ch_ ## _period(				\
 		 module->state.regs.lo_ ## ch_.period;			\
 									\
 	return period ? period : 1;					\
-}
-
-DEFINE_CF2149_CHN_PERIOD(a)
-DEFINE_CF2149_CHN_PERIOD(b)
-DEFINE_CF2149_CHN_PERIOD(c)
-
-#define DEFINE_CF2149_CHN_UPDATE(ch_)					\
+}									\
+									\
 static bool cf2149_ch ## ch_ ## _update(struct cf2149_module *module)	\
 {									\
 	const uint16_t period = cf2149_ch ## ch_ ## _period(module);	\
@@ -32,23 +26,24 @@ static bool cf2149_ch ## ch_ ## _update(struct cf2149_module *module)	\
 	}								\
 									\
 	return module->state.tone.ch_.t;				\
-}
-
-DEFINE_CF2149_CHN_UPDATE(a)
-DEFINE_CF2149_CHN_UPDATE(b)
-DEFINE_CF2149_CHN_UPDATE(c)
-
-#define DEFINE_CF2149_MXN(ch_)						\
+}									\
+									\
 static bool cf2149_mx ## ch_(const struct cf2149_module *module,	\
 	const bool t, const bool n)					\
 {									\
 	return (module->state.regs.iomix.tone_  ## ch_ || t) &&		\
 	       (module->state.regs.iomix.noise_ ## ch_ || n);		\
+}									\
+									\
+static uint8_t cf2149_lv ## ch_(const struct cf2149_module *module,	\
+	const bool mx, const uint8_t lvl, const uint8_t env)		\
+{									\
+	return mx ? (module->state.regs.level_ ## ch_.m ? env : lvl) : 0; \
 }
 
-DEFINE_CF2149_MXN(a)
-DEFINE_CF2149_MXN(b)
-DEFINE_CF2149_MXN(c)
+CF2149_DEFINE_CHN(a)
+CF2149_DEFINE_CHN(b)
+CF2149_DEFINE_CHN(c)
 
 static uint16_t cf2149_noise_period(const struct cf2149_module *module)
 {
@@ -121,17 +116,6 @@ static uint8_t cf2149_env_level(struct cf2149_module *module)
 
 	return (w << 3) | (w ? 0x7 : 0);  /* FIXME: Adaptable rounding mode. */
 }
-
-#define CF2149_LVN(ch_)							\
-static uint8_t cf2149_lv ## ch_(const struct cf2149_module *module,	\
-	const bool mx, const uint8_t lvl, const uint8_t env)		\
-{									\
-	return mx ? (module->state.regs.level_ ## ch_.m ? env : lvl) : 0; \
-}
-
-CF2149_LVN(a)
-CF2149_LVN(b)
-CF2149_LVN(c)
 
 static uint8_t cf2149_level_ext(uint8_t lvl)
 {

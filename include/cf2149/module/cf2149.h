@@ -137,6 +137,7 @@ struct cf2149_ac {
 
 struct cf2149_cycle {
 	uint64_t c;
+	uint64_t d;
 };
 
 /* Bus direction, bus control 2, 1 */
@@ -246,9 +247,9 @@ struct cf2149_module {
 
 struct cf2149_module cf2149_init();
 
-static inline struct cf2149_cycle cf2149_cycle_c(uint64_t c)
+static inline struct cf2149_cycle cf2149_cycle_cd(uint64_t c, uint64_t d)
 {
-	return (struct cf2149_cycle) { .c = c };
+	return (struct cf2149_cycle) { .c = c, .d = d };
 }
 
 #endif /* CF2149_MODULE_CF2149_H */

@@ -133,7 +133,7 @@ static size_t cf2149_rd_ac(struct cf2149_module *module,
 	const uint8_t xlvb = cf2149_level_ext(module->state.regs.level_b.level);
 	const uint8_t xlvc = cf2149_level_ext(module->state.regs.level_c.level);
 
-	const uint64_t cd = module->port.state.select_l ? 8 : 16;
+	const uint64_t cd = cycle.d * (module->port.state.select_l ? 8 : 16);
 	size_t i = 0;
 
 	for (; module->cycle.c < cycle.c && i < count;

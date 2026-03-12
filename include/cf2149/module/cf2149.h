@@ -245,7 +245,7 @@ struct cf2149_module {
 	} debug;
 };
 
-struct cf2149_module cf2149_init();
+struct cf2149_module cf2149_init(void);
 
 static inline struct cf2149_cycle cf2149_cycle_cd(uint64_t c, uint64_t d)
 {

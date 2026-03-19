@@ -59,6 +59,13 @@
 		}							\
 	} while (0)
 
+#define MODULE_WARN_ONCE(module, format...)				\
+	do {								\
+		if (!(module)->debug.warned_once)			\
+			pr_warn(module, format);			\
+		(module)->debug.warned_once = true;			\
+	} while (0)
+
 #define MODULE_BUG(module) pr_err_msg(module, "BUG")
 
 #endif /* CF2149_MODULE_ASSERT_H */
